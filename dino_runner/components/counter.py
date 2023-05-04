@@ -17,7 +17,7 @@ class Counter:
             screen.blit(self.text, self.text_rect)
         elif color == False:
             font = pygame.font.Font(FONT_STYLE, 30)
-            self.text = font.render(f'Score: {self.count}', True, (255, 255, 255))
+            self.text = font.render(f'Score: {self.count}', True, (176, 176, 176))
             self.text_rect = self.text.get_rect()
             self.text_rect.center = (1000, 50)
             screen.blit(self.text, self.text_rect)

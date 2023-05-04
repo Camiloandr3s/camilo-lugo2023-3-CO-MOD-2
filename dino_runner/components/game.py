@@ -1,10 +1,11 @@
 import pygame
 
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, ICON_DEFEAT
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, ICON_DEFEAT, DINO_DEATH, DEFAULT_TYPE
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.menu import Menu
 from dino_runner.components.counter import Counter
+from dino_runner.components.powerups.power_up_manager import PowerUpManager
 
 class Game:
     GAME_SPEED = 20
@@ -26,13 +27,14 @@ class Game:
         self.death_count = Counter()
         self.highest_score = Counter()
         self.color_screen = True
+        self.power_manager = PowerUpManager()
+        self.has_power_up = True
 
     def execute(self):
         self.running = True
         while self.running:
             if not self.playing:
                 self.show_menu()
-
         pygame.display.quit()
         pygame.quit()
          
@@ -56,6 +58,7 @@ class Game:
         self.obstacle_manager.update(self)
         self.score.update()
         self.update_score()
+        self.power_manager.update(self)
 
     def draw(self):
         self.clock.tick(FPS)
@@ -65,6 +68,8 @@ class Game:
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.score.draw(self.screen, self.color_screen)
+        self.power_manager.draw(self.screen)
+        self.power_up()
         pygame.display.update()
         pygame.display.flip()
 
@@ -91,10 +96,10 @@ class Game:
             self.menu.draw(self.screen, "Press any key to restard to game")
             self.menu.draw(self.screen, f"Your score: {self.score.count}", half_screen_width, 350, )
             self.menu.draw(self.screen, f"Highest score: {self.highest_score.count}", half_screen_width, 400, )
-            self.menu.draw(self.screen, f"Deaths: {self.dead_count.count}", half_screen_width, 450, )
+            self.menu.draw(self.screen, f"Deaths: {self.death_count.count}", half_screen_width, 450, )
 
             self.screen.blit(ICON_DEFEAT, (half_screen_width - 180, half_screen_height - 200))
-            self.screen.blit(ICON, (half_screen_width - 50, half_screen_height - 140))
+            self.screen.blit(DINO_DEATH, (half_screen_width - 50, half_screen_height - 140))
 
         self.menu.update(self)
 
@@ -124,3 +129,13 @@ class Game:
         elif self.color_screen == False:
             self.screen.fill((0, 0, 0))
  
+    def power_up(self):
+        if self.player.has_power_up:
+            time_to_show = round((self.player.power_up_time - pygame.time.get_ticks()) /1000, 2 )
+            if time_to_show >= 0:
+                self.menu.draw(self.screen, f"{self.player.type.capitalize()} enabled for {time_to_show} seconds", 500, 50)
+            else: 
+                self.player.has_power_up = False
+                self.player.type = DEFAULT_TYPE
+
+                               
