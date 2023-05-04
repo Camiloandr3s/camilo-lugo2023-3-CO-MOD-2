@@ -23,8 +23,8 @@ RUNNING_SHIELD = [
 ]
 
 RUNNING_HAMMER = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Hammer.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2Hammer.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1Hammer.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2Hammer1.png")),
 ]
 
 JUMPING = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJump.png"))
@@ -64,6 +64,7 @@ ICON_DEFEAT = pygame.image.load(os.path.join(IMG_DIR, "Other/GameOver.png"))
 CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
+RESET = pygame.image.load(os.path.join(IMG_DIR, "Other/Reset.png"))
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
@@ -74,5 +75,7 @@ DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"
 
 HAMMER_TYPE = "hammer"
+
+DEATH_TYPE = "death"
 
 FONT_STYLE = "freesansbold.ttf"
